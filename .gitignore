@@ -8,3 +8,4 @@ __pycache__/
 .env.*.local
 storage/**
 !storage/.gitkeep
+.DS_Store
