@@ -7,12 +7,15 @@ import json
 import logging
 from typing import Any
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from sqlmodel import select
 
+from .auth import router as auth_router
 from .config import settings
 from .db import init_db, session_scope
+from .paths import TEMPLATES_DIR
 from .storage import ensure_storage_root
 
 
@@ -48,7 +51,11 @@ def configure_logging() -> None:
     root_logger.setLevel(logging.INFO)
 
 
+templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+
+
 app = FastAPI(title="ZTransfer")
+app.include_router(auth_router)
 
 
 @app.on_event("startup")
@@ -61,10 +68,10 @@ def _startup() -> None:
 
 
 @app.get("/", response_class=HTMLResponse)
-def index() -> str:
+def index(request: Request) -> HTMLResponse:
     """Placeholder upload page until the frontend lands."""
 
-    return "<html><body><h1>ZTransfer</h1><p>Upload interface coming soon.</p></body></html>"
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.get("/healthz")
