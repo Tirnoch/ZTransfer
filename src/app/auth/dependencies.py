@@ -9,7 +9,9 @@ from ..models import User
 from . import service
 
 
-def get_current_user(session_token: str | None = Cookie(default=None, alias=settings.session_cookie_name)) -> User:
+def get_current_user(
+    session_token: str | None = Cookie(default=None, alias=settings.session_cookie_name)
+) -> User:
     """Dependency that resolves the currently authenticated user."""
 
     if session_token is None:
@@ -20,4 +22,10 @@ def get_current_user(session_token: str | None = Cookie(default=None, alias=sett
     return user
 
 
-RequireAuth = Depends(get_current_user)
+def require_auth(current_user: User = Depends(get_current_user)) -> User:
+    """Convenience wrapper dependency returning the authenticated user."""
+
+    return current_user
+
+
+RequireAuth = require_auth

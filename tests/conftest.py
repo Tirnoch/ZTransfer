@@ -14,6 +14,9 @@ MODULES_TO_RELOAD: Iterable[str] = [
     "app.storage",
     "app.db",
     "app.auth",
+    "app.files",
+    "app.files.service",
+    "app.files.routes",
     "app.main",
 ]
 
@@ -46,6 +49,7 @@ def test_client(tmp_path, monkeypatch) -> TestClient:
     monkeypatch.setenv("SESSION_TTL_HOURS", "24")
     monkeypatch.setenv("CSRF_TOKEN_TTL_MINUTES", "60")
     monkeypatch.setenv("INVITE_TTL_HOURS", "24")
+    monkeypatch.setenv("MAX_SIZE_BYTES", "1048576")
 
     from app import config as app_config
 

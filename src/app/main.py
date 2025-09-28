@@ -7,12 +7,15 @@ import json
 import logging
 from typing import Any
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlmodel import select
 
 from .auth import router as auth_router
+from .files import router as files_router
 from .config import settings
 from .db import init_db, session_scope
 from .paths import TEMPLATES_DIR
@@ -54,17 +57,19 @@ def configure_logging() -> None:
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 
 
-app = FastAPI(title="ZTransfer")
-app.include_router(auth_router)
-
-
-@app.on_event("startup")
-def _startup() -> None:
-    """Prepare application resources."""
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Configure logging, storage, and database before serving requests."""
 
     configure_logging()
     ensure_storage_root()
     init_db()
+    yield
+
+
+app = FastAPI(title="ZTransfer", lifespan=lifespan)
+app.include_router(auth_router)
+app.include_router(files_router)
 
 
 @app.get("/", response_class=HTMLResponse)
