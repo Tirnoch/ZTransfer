@@ -56,6 +56,9 @@ ZTransfer is a local-first, invite-only file transfer service inspired by WeTran
 # Run type checks
  python -m mypy src
 
+# Run auth flow tests
+ python -m pytest
+
 # Launch the API (hot-reload for development)
  uvicorn app.main:app --reload --app-dir src
 ```

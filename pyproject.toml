@@ -11,11 +11,18 @@ dependencies = [
     "python-multipart",
     "sqlmodel",
     "jinja2",
+    "argon2-cffi",
+    "itsdangerous",
+    "email-validator",
     "uvicorn[standard]",
 ]
 
 [project.optional-dependencies]
-dev = ["mypy"]
+dev = [
+    "mypy",
+    "pytest",
+    "httpx",
+]
 
 [build-system]
 requires = ["hatchling"]

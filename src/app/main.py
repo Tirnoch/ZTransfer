@@ -71,7 +71,7 @@ def _startup() -> None:
 def index(request: Request) -> HTMLResponse:
     """Placeholder upload page until the frontend lands."""
 
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html", {})
 
 
 @app.get("/healthz")
