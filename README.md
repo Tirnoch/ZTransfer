@@ -17,8 +17,8 @@ ZTransfer is a local-first, invite-only file transfer service inspired by WeTran
 |-------|-------------|--------|
 | Phase 0 | Tooling & environment setup | ✅ Completed |
 | Phase 1 | Core API skeleton, logging, health checks | ✅ Completed |
-| Phase 2 | Authentication & user management | ⏳ In progress |
-| Phase 3 | Upload flow (streaming + metadata) | ⏳ Pending |
+| Phase 2 | Authentication & user management | ✅ Completed |
+| Phase 3 | Upload flow (streaming + metadata) | ✅ Completed |
 | Phase 4 | Share links, downloads, deletion | ⏳ Pending |
 | Phase 5 | Retention & background tasks | ⏳ Pending |
 | Phase 6 | Frontend (React, Tailwind, shadcn) | ⏳ Pending |
